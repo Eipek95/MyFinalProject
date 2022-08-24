@@ -38,13 +38,13 @@ namespace WebAPI
 
             //// productmanager------>Iproductservice
             ///efproductdal ------>ýproductdal
-            services.AddSingleton<IProductService, ProductManager>();
+            ///services.AddSingleton<IProductService, ProductManager>();
             //IProductService isterse ona arka planda productmanager oluþtur ona onu ver.
             //eðer sen bir baðýmlýlýk görürsen bu tipte karþýlýðý virgülden sonrasý ver.
             //singleton tüm bellekte bir tane productmanager oluþturuyor ve her gelen cliente ayný instence verir.
             //signletoni içinde data tutuyorsak kullanýlýr.signleton her yerde kullanýlýr web desktop uyglamasý vs.
             //singleton --->kýsaca biri ctorda Iproductservice isterse ona arka planda productmanager newle.
-            services.AddSingleton<IProductDal,EfProductDal>();
+            ///services.AddSingleton<IProductDal,EfProductDal>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPI", Version = "v1" });
