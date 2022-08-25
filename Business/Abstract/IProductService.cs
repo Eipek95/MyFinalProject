@@ -13,6 +13,7 @@ namespace Business.Abstract
     {
         //void olan metod----> mesaj ve durum bildireceği için ıresult türünde oldu
         IResult Add(Product product);
+        IResult Update(Product product);
 
 
         
