@@ -13,7 +13,7 @@ namespace Core3.Utilities.Security.Encryption
         public static SigningCredentials CreateSigningCredentail(SecurityKey securityKey)
         {
             return new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha512Signature);
-            //anahtar ve şifreleme anahtarını veririz.
+            //anahtar ve şifreleme algoritması veririz.
         }
     }
 }
