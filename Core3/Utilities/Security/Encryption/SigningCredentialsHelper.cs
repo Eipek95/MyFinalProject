@@ -10,7 +10,7 @@ namespace Core3.Utilities.Security.Encryption
     public class SigningCredentialsHelper
     {
         //Credentials---->kullanıcı giriş bilgileri demek(kullanıcı adı veya mail ve şifre vs)
-        public static SigningCredentials CreateSigningCredentail(SecurityKey securityKey)
+        public static SigningCredentials CreateSigningCredentials(SecurityKey securityKey)
         {
             return new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha512Signature);
             //anahtar ve şifreleme algoritması veririz.
