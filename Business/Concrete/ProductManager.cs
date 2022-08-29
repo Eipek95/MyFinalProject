@@ -4,6 +4,7 @@ using Business.CCS;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core3.Aspects.Autofac.Caching;
+using Core3.Aspects.Autofac.Transaction;
 using Core3.Aspects.Autofac.Validation;
 using Core3.Business;
 using Core3.CrossCuttingConcerns.Validation;
@@ -87,7 +88,17 @@ namespace Business.Concrete
             return new ErrorResult(Messages.ProductNameInvalid);
 
         }
-
+        [TransactionScopeAspect]
+        public IResult AddTransactionalTest(Product product)
+        {
+            Add(product);//ürünü ekler
+            if (product.UnitPrice<10)//şartı kontrol eder
+            {
+                throw new Exception("");
+            }
+            Add(product);//eğer şart sağlanmamışsa veya işlem kesintiye uğrayıp gerçekleşmemişse olayları geri alır
+            return new SuccessResult(Messages.ProductAdded);
+        }
         //public void Add(Product product)
         //{
         //    _productDal.Add(product);
@@ -131,5 +142,7 @@ namespace Business.Concrete
             return new SuccessResult();
 
         }
+
+
     }
 }
