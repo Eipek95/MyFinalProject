@@ -4,6 +4,7 @@ using Business.CCS;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core3.Aspects.Autofac.Caching;
+using Core3.Aspects.Autofac.Performance;
 using Core3.Aspects.Autofac.Transaction;
 using Core3.Aspects.Autofac.Validation;
 using Core3.Business;
@@ -65,6 +66,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Product>>(_productDal.GetAll(x => x.UnitPrice >= min && x.UnitPrice <= max));
         }
         [CacheAspect]
+        [PerformanceAspect(5)]//bu metodun çalışması 5sn geçerse beni uyar
         public IDataResult<Product> GetById(int productId)
         {
             return new SuccessDataResult<Product>(_productDal.Get(x => x.ProductId == productId));
