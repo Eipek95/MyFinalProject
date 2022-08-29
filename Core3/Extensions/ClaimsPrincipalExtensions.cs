@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Core3.Extensions
 {
+    //extensions methodlar static olur
     public static class ClaimsPrincipalExtensions
     {
         //this ClaimsPrincipal claimsPrincipal--->var olan class içine metod ekleme olayıdır

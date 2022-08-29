@@ -27,7 +27,7 @@ namespace Business.Concrete
             _productDal = productDal;
             _categoryService = categoryService;
         }
-        [SecuredOperation("product.add,admin")]//yetkilendirme kontrolü yapar
+        [SecuredOperation("product.add,admin")]//yetkilendirme kontrolü yapar--->ya product.add claimi yada admin claimi olması gerekir
         [ValidationAspect(typeof(ProductValidator))]
         public IResult Add(Product product)
         {

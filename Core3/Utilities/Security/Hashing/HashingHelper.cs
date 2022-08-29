@@ -31,7 +31,7 @@ namespace Core3.Utilities.Security.Hashing
                 var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
                 for (int i = 0; i < computedHash.Length; i++)
                 {
-                    if (computedHash[i] != password[i])//hesaplanan hash ile db gelen hash
+                    if (computedHash[i] != passwordHash[i])//hesaplanan hash ile db gelen hash
                     {
                         return false;
                     }

@@ -1,5 +1,7 @@
 using Business.Abstract;
 using Business.Concrete;
+using Core3.DependencyResolvers;
+using Core3.Extensions;
 using Core3.Utilities.Security.Encryption;
 using Core3.Utilities.Security.JWT;
 using DataAccess.Abstract;
@@ -51,7 +53,6 @@ namespace WebAPI
             //singleton --->kýsaca biri ctorda Iproductservice isterse ona arka planda productmanager newle.
             ///services.AddSingleton<IProductDal,EfProductDal>();
             ///
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -67,7 +68,10 @@ namespace WebAPI
                         IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
                     };
                 });
-            Core3.Utilities.IoC.ServiceTool.Create(services);
+            services.AddDependencyResolvers(new Core3.Utilities.IoC.ICoreModule[]
+            {
+                new CoreModule()
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPI", Version = "v1" });
