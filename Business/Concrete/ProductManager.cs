@@ -3,6 +3,7 @@ using Business.BusinessAspects.Autofac;
 using Business.CCS;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core3.Aspects.Autofac.Caching;
 using Core3.Aspects.Autofac.Validation;
 using Core3.Business;
 using Core3.CrossCuttingConcerns.Validation;
@@ -29,6 +30,7 @@ namespace Business.Concrete
         }
         [SecuredOperation("product.add,admin")]//yetkilendirme kontrolü yapar--->ya product.add claimi yada admin claimi olması gerekir
         [ValidationAspect(typeof(ProductValidator))]
+        [CacheRemoveAspect("IProductService.Get")]//add olunca bellekteki IProductService.Get cachelerini sil
         public IResult Add(Product product)
         {
             IResult result = BusinessRules.Run(CheckICategoryProductCountOfCategoryCorrect(product.CategoryId), CheckIfProductNameExists(product), CheckICategoryLimitExceded());
@@ -40,11 +42,11 @@ namespace Business.Concrete
             return new SuccessResult(Messages.ProductAdded);
 
         }
-
+        [CacheAspect]
         public IDataResult<List<Product>> GetAll()
         {
-            //MaintenanceTime: bakım zamanı.21 den 22ye kadar sürer
-            if (DateTime.Now.Hour == 21)
+            //MaintenanceTime: bakım zamanı.1 den 2ye kadar sürer
+            if (DateTime.Now.Hour == 1)
             {
                 return new ErrorDataResult<List<Product>>(Messages.MaintenanceTime);
             }
@@ -61,7 +63,7 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<Product>>(_productDal.GetAll(x => x.UnitPrice >= min && x.UnitPrice <= max));
         }
-
+        [CacheAspect]
         public IDataResult<Product> GetById(int productId)
         {
             return new SuccessDataResult<Product>(_productDal.Get(x => x.ProductId == productId));
@@ -74,6 +76,7 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(ProductValidator))]
+        [CacheRemoveAspect("IProductService.Get")]//update olunca IProductService.Get'in cacheteki tüm değerlerini sil.eğer sadece get yazsaydık bütün get methoduna sahip olan cacheleri silerdi.Category get,customer get vs..
         public IResult Update(Product product)
         {
             if (CheckICategoryProductCountOfCategoryCorrect(product.CategoryId).Success && CheckIfProductNameExists(product).Success)
