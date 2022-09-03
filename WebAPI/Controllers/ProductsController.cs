@@ -5,6 +5,7 @@ using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace WebAPI.Controllers
 {
@@ -21,10 +22,11 @@ namespace WebAPI.Controllers
         {
             _productService = productService;
         }
-
+        
         [HttpGet("getall")]//(alias yöntemi)overload ile ayrılması olayı için getall ismini verdik.overload getbyid ismini verdik.bu olay routing yöntemi ilede çözülebilir
         public IActionResult GetAll() 
         {
+            Thread.Sleep(5000);//angular tarafında post işleni yapılırken asenkron durum oludğu için burda beş sn beklet verileri öyle getir diyoruz.vs code içindeki product.component.html içindeki spinner çalışması 
             var result= _productService.GetAll();
             if (result.Success)
             {
