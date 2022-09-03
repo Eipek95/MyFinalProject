@@ -44,7 +44,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.ProductAdded);
 
         }
-        [CacheAspect]
+        //[CacheAspect]
         public IDataResult<List<Product>> GetAll()
         {
             //MaintenanceTime: bakım zamanı.1 den 2ye kadar sürer

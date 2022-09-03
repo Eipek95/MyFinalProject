@@ -28,7 +28,7 @@ namespace WebAPI.Controllers
             var result= _productService.GetAll();
             if (result.Success)
             {
-                return  Ok(result.Data);//ok--->status 200 return successfull 200'DE Data ver mesajda verebilirdi ben data versin istedim
+                return  Ok(result);//ok--->status 200 return successfull 200'DE Data ver mesajda verebilirdi ben data versin istedim
             }
             else
             {

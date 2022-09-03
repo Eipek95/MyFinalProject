@@ -53,6 +53,11 @@ namespace WebAPI
             //singleton --->kýsaca biri ctorda Iproductservice isterse ona arka planda productmanager newle.
             ///services.AddSingleton<IProductDal,EfProductDal>();
             ///
+
+            //angular
+            services.AddCors();
+
+
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -87,11 +92,11 @@ namespace WebAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPI v1"));
             }
-
-            app.UseAuthentication();//jwt Authentication
+            app.UseCors(builder=>builder.WithOrigins("http://localhost:4200").AllowAnyHeader());//verdiðim adrsten gelen her istek için  ver
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseAuthentication();//jwt Authentication
 
             app.UseAuthorization();
 
